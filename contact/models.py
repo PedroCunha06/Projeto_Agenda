@@ -7,6 +7,16 @@ from django.utils import timezone
 # DEPOIS 
 # - owner(foreing key) 
 
+class Category(models.Model):
+    class Meta:
+        verbose_name = 'Category'   # O que mostrar quando houver uma categoria
+        verbose_name_plural = 'Categories'  # O que mostrar quando estiver no plural
+    
+    name = models.CharField(max_length=30)
+    
+    def __str__(self) -> str:   # O  que será mostrado na admin do model
+        return f'{self.name}'
+
 class Contact(models.Model):
     first_name = models.CharField(max_length=40)
     last_name = models.CharField(max_length=20, blank=True)
@@ -16,6 +26,10 @@ class Contact(models.Model):
     description = models.TextField(blank=True)
     show = models.BooleanField(default=True)
     picture = models.ImageField(blank=True, upload_to='pictures/%Y/%m')
+    category = models.ForeignKey(   # Relacão com classe Categoria
+        Category, 
+        on_delete=models.SET_NULL,
+        blank=True, null=True)
     
     def __str__(self) -> str:   # O  que será mostrado na admin do model
         return f'{self.first_name} {self.last_name}'
