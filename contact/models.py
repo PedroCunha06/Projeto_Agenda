@@ -14,4 +14,7 @@ class Contact(models.Model):
     created_date = models.DateTimeField(default=timezone.now)   # Django registra automaticamente a hora de criação.
     description = models.TextField(blank=True)
     
+    def __str__(self) -> str:   # O  que será mostrado na admin do model
+        return f'{self.first_name} {self.last_name}'
+    
     
