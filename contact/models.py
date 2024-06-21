@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 # ID (primary key - gerado automaticamente) -> Valor que busca na base de dados
 # first_name(string) - last_name(string) -  phone(string) - email(email) - created_date(date) - description(text)
@@ -29,6 +30,10 @@ class Contact(models.Model):
     category = models.ForeignKey(   # Relacão com classe Categoria
         Category, 
         on_delete=models.SET_NULL,
+        blank=True, null=True)
+    owner = models.ForeignKey(   # Relacão com classe Categoria
+        User, 
+        on_delete=models.CASCADE,   # Apaga tudo quando o usuario é deletado
         blank=True, null=True)
     
     def __str__(self) -> str:   # O  que será mostrado na admin do model
