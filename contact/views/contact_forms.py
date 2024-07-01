@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
@@ -18,6 +19,7 @@ def create(request):
         # Caso o formulário seja válido, então será redirecionado para a página update
         if form.is_valid():
             contact = form.save()     # Salva os dados na base de dados
+            messages.success(request, 'Contact created')
             return redirect('contact:update', contact_id=contact.pk)
     
         return render(
@@ -53,6 +55,7 @@ def update(request, contact_id):
         # Caso o formulário seja válido, então será redirecionado para a página update
         if form.is_valid():
             contact = form.save()     # Salva os dados na base de dados
+            messages.success(request, 'Updated contact')
             return redirect('contact:update', contact_id=contact.pk)
     
         return render(
@@ -79,6 +82,7 @@ def delete(request, contact_id):
 
     if confirmation == 'yes':
         contact.delete()
+        messages.success(request, 'Contact deleted')
         return redirect('contact:index')
         
     return render (
