@@ -1,0 +1,16 @@
+{% extends "global/base.html" %}
+
+{% block content %}
+    <div class="form-wrapper">  
+        <h2>Are you sure you want to log out?</h2>
+        <div class="contact-links">
+            <a class="btn btn-link" href="{% url 'contact:index'%}">No</a>
+            <form action="{% url 'contact:logout' %}" method="POST">
+                {% csrf_token %}
+                
+                <input type="hidden" name="confirmation" value="yes">
+                <button class="btn btn-link btn-delete" type="submit">Yes</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

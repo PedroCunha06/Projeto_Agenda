@@ -337,6 +337,10 @@ svg {
   line-height: var(--small-font-size);
 }
 
+#btn-login {
+  text-decoration: none;
+}
+
 .btn-delete {
   background: tomato;
 }
