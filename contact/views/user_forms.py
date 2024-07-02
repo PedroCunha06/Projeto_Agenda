@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import auth
 from django.shortcuts import render, redirect
+from contact.decorators import login_required_with_message
 
 from contact.forms import RegisterForm, RegisterUpdateForm
 
@@ -14,7 +15,7 @@ def register(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Registered user')
-            return redirect('contact:index')
+            return redirect('contact:login')
 
     return render(
         request,
@@ -24,7 +25,7 @@ def register(request):
             'title': 'Register User'
         }
     )
-    
+
 def login_views(request):
     form = AuthenticationForm(request)
     
@@ -35,7 +36,7 @@ def login_views(request):
             user = form.get_user()
             auth.login(request, user)
             messages.success(request, 'Logged in successfully!')
-            return redirect('contact:login')
+            return redirect('contact:index')
         
         messages.error(request, 'Loggin failed')
     
@@ -48,7 +49,7 @@ def login_views(request):
         }
     )
     
-   
+@login_required_with_message('You need to be logged in to logout')   
 def logout_views(request):
     confirmation = request.POST.get('confirmation', 'no')
      
@@ -64,7 +65,8 @@ def logout_views(request):
             'title': 'Logout User'
         }
     )
-    
+
+@login_required_with_message('You need to be logged in to update a user')      
 def user_update(request):
     form = RegisterUpdateForm(instance=request.user)
     
