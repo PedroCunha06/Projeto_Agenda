@@ -6,45 +6,45 @@
     <nav class="menu">
         <ul class="menu-list">
             {% if user.is_authenticated %}
-                <li class="menu-item">
-                    <a href="{% url "contact:create" %}" class="menu-link">
-                        Create
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="{% url "contact:user_update" %}" class="menu-link">
-                        Profile
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="{% url "contact:logout" %}" class="menu-link">
-                        Logout
-                    </a>
-                </li>
+            <li class="menu-item">
+
+                <a href="{% url "contact:create" %}" class="menu-link">
+                    <i class="ri-contacts-book-line"></i>
+                    Create Contact
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{% url "contact:user_update" %}" class="menu-link">
+                    <i class="ri-profile-line"></i>
+                    Profile
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{% url "contact:logout" %}" class="menu-link">
+                    <i class="ri-logout-box-line"></i>
+                    Logout
+                </a>
+            </li>
             {% else %}
-                <li class="menu-item">
-                    <a href="{% url "contact:login" %}" class="menu-link">
-                        Login
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="{% url "contact:register" %}" class="menu-link">
-                        Register
-                    </a>
-                </li>
+            <li class="menu-item">
+                <a href="{% url "contact:login" %}" class="menu-link">
+                    <i class="ri-login-box-line"></i>
+                    Login
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{% url "contact:register" %}" class="menu-link">
+                    <i class="ri-user-add-line"></i>
+                    Register
+                </a>
+            </li>
             {% endif %}
         </ul>
     </nav>
 
     <div class="search">
         <form action="{% url "contact:search" %}" class="get">
-            <input 
-            type="search"
-            class="search-input" 
-            placeholder="Search..." 
-            id="search" 
-            name="q" 
-            value= {{ request.GET.q }}>
+            <input type="search" class="search-input" placeholder="Search..." id="search" name="q" value={{request.GET.q}}>
         </form>
     </div>
 

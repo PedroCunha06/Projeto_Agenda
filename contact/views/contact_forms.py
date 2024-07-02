@@ -20,7 +20,9 @@ def create(request):
         
         # Caso o formulário seja válido, então será redirecionado para a página update
         if form.is_valid():
-            contact = form.save()     # Salva os dados na base de dados
+            contact = form.save(commit=False)     # Salva os dados na base de dados
+            contact.owner = request.user
+            contact.save()
             messages.success(request, 'Contact created')
             return redirect('contact:update', contact_id=contact.pk)
     
@@ -43,7 +45,7 @@ def create(request):
   
 @login_required_with_message('You need to be logged in to update a contact')     
 def update(request, contact_id):
-    contact = get_object_or_404(Contact, pk=contact_id, show=True)  # Busca do contato ou erro 404
+    contact = get_object_or_404(Contact, pk=contact_id, show=True, owner=request.user)  # Busca do contato ou erro 404
     form_action = reverse('contact:update', args=(contact_id, ))
     
     if request.method == 'POST':
@@ -80,7 +82,7 @@ def update(request, contact_id):
 
 @login_required_with_message('You need to be logged in to delete a contact')        
 def delete(request, contact_id):
-    contact = get_object_or_404(Contact, pk=contact_id, show=True)  # Busca do contato ou erro 404
+    contact = get_object_or_404(Contact, pk=contact_id, show=True, owner=request.user)  # Busca do contato ou erro 404
     confirmation = request.POST.get('confirmation', 'no')
 
 
